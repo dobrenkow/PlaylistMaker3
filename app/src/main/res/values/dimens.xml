@@ -2,7 +2,7 @@
 <resources>
 
     <dimen name="big_text">26sp</dimen>
-    <dimen name="normal_text">19sp</dimen>
+    <dimen name="normal_text">16sp</dimen>
 
     <dimen name="main_padding">16dp</dimen>
     <dimen name="icon_padding">8dp</dimen>

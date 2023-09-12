@@ -8,6 +8,7 @@
     android:orientation="vertical">
 
 
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -15,6 +16,7 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:title="@string/settings"
+
         app:titleTextAppearance="@style/ToolbarTextAppearance.Title" />
 
     <androidx.appcompat.widget.SwitchCompat
@@ -39,11 +41,12 @@
         android:paddingEnd="@dimen/main_padding"
         android:text="@string/share_app"
         android:textColor="@color/black"
+        android:textAllCaps = "false"
         android:textSize="@dimen/normal_text"
         app:icon="@drawable/share_icon"
         app:iconGravity="end"
         app:iconSize="@dimen/icon_size"
-        app:iconTint="@color/gray" />
+        app:iconTint="@color/lightgray" />
 
     <Button
         android:id="@+id/support_button"
@@ -57,11 +60,12 @@
         android:paddingEnd="@dimen/main_padding"
         android:text="@string/write_to_support"
         android:textColor="@color/black"
+        android:textAllCaps = "false"
         android:textSize="@dimen/normal_text"
         app:icon="@drawable/support_icon"
         app:iconGravity="end"
         app:iconSize="@dimen/icon_size"
-        app:iconTint="@color/gray" />
+        app:iconTint="@color/lightgray" />
 
     <Button
         android:id="@+id/terms_button"
@@ -75,9 +79,10 @@
         android:paddingEnd="@dimen/main_padding"
         android:text="@string/terms_of_use"
         android:textColor="@color/black"
+        android:textAllCaps = "false"
         android:textSize="@dimen/normal_text"
         app:icon="@drawable/arrow_forward_icon"
         app:iconGravity="end"
         app:iconSize="@dimen/icon_size"
-        app:iconTint="@color/gray" />
+        app:iconTint="@color/lightgray" />
 </LinearLayout>
