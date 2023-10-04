@@ -27,8 +27,8 @@ class SettingsActivity : AppCompatActivity() {
         buttonUserAgreement = findViewById(R.id.terms_button)
         //themeSwitch = findViewById(R.id.dark_theme_switch)
         val isDarkMode = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
-        //themeSwitch.isChecked = isDarkMode
-        //setUpToolbar()
+        /*themeSwitch.isChecked = isDarkMode
+        setUpToolbar()*/
         onClickListenerButton()
     }
 
