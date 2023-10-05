@@ -2,4 +2,24 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="blue">#3772E7</color>
+    <color name="gray">#9d9e9d</color>
+    <color name="green">#388f38</color>
+    <color name="lightgray">#AEAFB4</color>
+    <color name="icon">#AEAFB4</color>
+    <color name="trackTint">#9d9e9d</color>
+    <color name="MainButton">#FFFFFFFF</color>
+    <color name="MainButtonText">#FF000000</color>
+    <color name="background">#3772E7</color>
+    <color name="colorTextToolbarSetting">#FF000000</color>
+    <color name="colorTextToolbarSearch">#FF000000</color>
+    <color name="colorInput">#AAAAAA</color>
+    <color name="colorHint">#AAAAAA</color>
+    <color name="colorStartSearch">#E6E8EB</color>
+    <color name="realblack">#FF000000</color>
+
+
+
+
+
 </resources>
