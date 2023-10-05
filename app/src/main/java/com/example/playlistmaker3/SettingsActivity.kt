@@ -10,13 +10,14 @@ import android.widget.Switch
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.AppCompatDelegate
 
+
+
 class SettingsActivity : AppCompatActivity() {
 
     private lateinit var toolbarSettings: Toolbar
     private lateinit var shareButton: Button
     private lateinit var buttonWriteSupport: Button
     private lateinit var buttonUserAgreement: Button
-    //private lateinit var themeSwitch: Switch
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +28,6 @@ class SettingsActivity : AppCompatActivity() {
         buttonUserAgreement = findViewById(R.id.terms_button)
 
 
-        //themeSwitch = findViewById(R.id.dark_theme_switch)
-        //val isDarkMode = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
-        /*themeSwitch.isChecked = isDarkMode*/
         setUpToolbar()
         onClickListenerButton()
     }
@@ -78,9 +76,6 @@ class SettingsActivity : AppCompatActivity() {
             parseWeb()
         }
     }
-        /* themeSwitch.setOnCheckedChangeListener { _, isChecked ->
-             toggleTheme(isChecked)
-         }*/
 
 
 }

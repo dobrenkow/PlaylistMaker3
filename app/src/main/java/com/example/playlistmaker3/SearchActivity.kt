@@ -12,6 +12,8 @@ import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.doOnTextChanged
 
+
+
 class SearchActivity : AppCompatActivity() {
     private lateinit var toolbarSettings: Toolbar
     private lateinit var search: EditText
