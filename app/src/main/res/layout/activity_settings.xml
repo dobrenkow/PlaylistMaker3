@@ -32,5 +32,32 @@
         android:textSize="@dimen/normal_text"
         android:theme="@style/MySwitch" />
 
+    <Button
+        android:id="@+id/share_app_button"
+        style="@style/ButtonStyle"
+        android:text="@string/share_app"
+        app:icon="@drawable/share_icon"
+        app:iconGravity="end"
+        app:iconSize="@dimen/icon_size"
+        app:iconTint="@color/icon" />
+
+    <Button
+        android:id="@+id/support_button"
+        style="@style/ButtonStyle"
+        android:text="@string/write_to_support"
+        app:icon="@drawable/support_icon"
+        app:iconGravity="end"
+        app:iconSize="@dimen/icon_size"
+        app:iconTint="@color/icon" />
+
+    <Button
+        android:id="@+id/terms_button"
+        style="@style/ButtonStyle"
+        android:text="@string/terms_of_use"
+        app:icon="@drawable/arrow_forward_icon"
+        app:iconGravity="end"
+        app:iconSize="@dimen/icon_size"
+        app:iconTint="@color/icon" />
+
 
 </LinearLayout>
