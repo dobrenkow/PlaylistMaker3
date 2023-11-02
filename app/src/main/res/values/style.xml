@@ -1,6 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.PlaylistMaker" parent="Theme.Material3.DayNight.NoActionBar">
+    </style>
+
         <style name="ButtonStyle" parent="Widget.MaterialComponents.Button">
             <item name="android:layout_width">match_parent</item>
             <item name="android:layout_height">wrap_content</item>
@@ -29,6 +31,4 @@
 
         </style>
 
-
-    </style>
 </resources>
