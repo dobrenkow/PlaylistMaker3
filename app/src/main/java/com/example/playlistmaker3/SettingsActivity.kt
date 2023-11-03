@@ -9,7 +9,7 @@ import android.widget.Button
 import android.widget.Switch
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.AppCompatDelegate
-
+import androidx.appcompat.widget.SwitchCompat
 
 
 class SettingsActivity : AppCompatActivity() {
@@ -18,6 +18,7 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var shareButton: Button
     private lateinit var buttonWriteSupport: Button
     private lateinit var buttonUserAgreement: Button
+    private lateinit var themeSwitch: SwitchCompat
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,11 +26,14 @@ class SettingsActivity : AppCompatActivity() {
         shareButton = findViewById(R.id.share_app_button)
         buttonWriteSupport = findViewById(R.id.support_button)
         buttonUserAgreement = findViewById(R.id.terms_button)
-
-
+        themeSwitch = findViewById(R.id.dark_theme_switch)
+        val isDarkMode = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
+        themeSwitch.isChecked = isDarkMode
         setUpToolbar()
         onClickListenerButton()
     }
+
+
     private fun setUpToolbar() {
         toolbarSettings = findViewById(R.id.toolbar1)
         toolbarSettings.setNavigationOnClickListener { onBackPressed() }
@@ -44,6 +48,14 @@ class SettingsActivity : AppCompatActivity() {
 
         val shareIntent = Intent.createChooser(sendIntent, null)
         activity.startActivity(shareIntent)
+    }
+
+    private fun toggleTheme(isChecked: Boolean) {
+        if (isChecked) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
     }
 
     private fun openEmailApp() {
@@ -73,6 +85,9 @@ class SettingsActivity : AppCompatActivity() {
         }
         buttonUserAgreement.setOnClickListener {
             parseWeb()
+        }
+        themeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            toggleTheme(isChecked)
         }
     }
 }
