@@ -32,7 +32,7 @@ class SearchActivity : AppCompatActivity() {
         button = findViewById(R.id.clear_button)
         toolbarSettings = findViewById(R.id.toolbarSettings)
         button.visibility = View.INVISIBLE
-        toolbarSettings.setNavigationOnClickListener { }
+        toolbarSettings.setNavigationOnClickListener { onBackPressed() }
 
         if (savedInstanceState != null) {
             savedText = savedInstanceState.getString((search_text), "")

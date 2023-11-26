@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"   xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
     android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/media"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:src="@drawable/media"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="8dp" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/media" />
+
 
     <LinearLayout
-        android:layout_width="256dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
-        android:orientation="vertical">
+        android:layout_marginStart="16dp"
+        android:orientation="vertical"
+        android:layout_weight="1">
 
         <TextView
             android:id="@+id/listTrackName"
@@ -28,9 +31,10 @@
             android:gravity="center"
             android:lineHeight="19dp"
             android:maxLines="1"
-            android:text="@string/trackName"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            tools:text="Track Name" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,7 +44,7 @@
             <TextView
                 android:id="@+id/listArtistName"
                 style="@style/App.Text.Search.Item"
-                android:text="@string/artistName" />
+                tools:text="Artist Name" />
 
             <ImageView
                 android:id="@+id/point"
@@ -51,8 +55,11 @@
             <TextView
                 android:id="@+id/trackTime"
                 style="@style/App.Text.Search.Item"
-                android:text="@string/trackTime" />
+                tools:text="Track Time" />
+
+
         </LinearLayout>
+
 
 
     </LinearLayout>
@@ -61,13 +68,12 @@
         android:id="@+id/arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="end"
         android:layout_marginStart="20dp"
         android:background="@android:color/transparent"
         android:minWidth="48dp"
         android:minHeight="48dp"
         android:src="@drawable/arrow_right"
         tools:ignore="SpeakableTextPresentCheck" />
-
 
 </LinearLayout>

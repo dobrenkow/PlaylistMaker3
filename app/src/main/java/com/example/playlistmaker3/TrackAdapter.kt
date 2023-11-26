@@ -35,7 +35,7 @@ class TrackAdapter(private val listTrack: List<Track>) :
             Glide.with(itemView)
                 .applyDefaultRequestOptions(requestOptions)
                 .load(track.artworkUrl100)
-                .transform(CenterCrop(), RoundedCorners(2)).into(artworkUrl100)
+                .transform(CenterCrop(), RoundedCorners(16)).into(artworkUrl100)
         }
     }
 
@@ -51,4 +51,5 @@ class TrackAdapter(private val listTrack: List<Track>) :
         val item = listTrack[position]
         holder.bind(item)
     }
+
 }
