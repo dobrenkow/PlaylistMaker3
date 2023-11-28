@@ -1,5 +1,7 @@
 package com.example.playlistmaker3
 
+import android.content.Context
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +14,8 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 
-class TrackAdapter(private val listTrack: List<Track>) :
+
+class TrackAdapter(private val listTrack: List<Track>,private val context: Context) :
     RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
 
     inner class TrackViewHolder(track: View) : RecyclerView.ViewHolder(track) {
@@ -24,7 +27,7 @@ class TrackAdapter(private val listTrack: List<Track>) :
         fun bind(track: Track) {
             val requestOptions =
                 RequestOptions()
-                    .placeholder(R.drawable.search_icon)
+                    .placeholder(R.drawable.placeholder)
                     .diskCacheStrategy(
                         DiskCacheStrategy.ALL
                     )
@@ -35,8 +38,19 @@ class TrackAdapter(private val listTrack: List<Track>) :
             Glide.with(itemView)
                 .applyDefaultRequestOptions(requestOptions)
                 .load(track.artworkUrl100)
-                .transform(CenterCrop(), RoundedCorners(16)).into(artworkUrl100)
+                .transform(CenterCrop(), RoundedCorners(dpToPx(radiusCorners, context)))
+                .into(artworkUrl100)
         }
+    }
+
+    private fun dpToPx(dp: Float, context: Context): Int {
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, dp, context.resources.displayMetrics
+        ).toInt()
+    }
+
+    companion object {
+        private const val radiusCorners = 2.0f
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
@@ -44,6 +58,7 @@ class TrackAdapter(private val listTrack: List<Track>) :
             LayoutInflater.from(parent.context).inflate(R.layout.track_list, parent, false)
         return TrackViewHolder(view)
     }
+
 
     override fun getItemCount(): Int = listTrack.size
 
@@ -53,3 +68,4 @@ class TrackAdapter(private val listTrack: List<Track>) :
     }
 
 }
+

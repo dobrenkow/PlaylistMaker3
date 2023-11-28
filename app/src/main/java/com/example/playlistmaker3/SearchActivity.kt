@@ -86,7 +86,7 @@ class SearchActivity : AppCompatActivity() {
     private fun getRecyclerView(){
         val recyclerView: RecyclerView = findViewById(R.id.track_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = TrackAdapter(addDataRecyclerView())
+        recyclerView.adapter = TrackAdapter(addDataRecyclerView(),this)
     }
     private fun addDataRecyclerView() : List<Track>{
         val trackInfoList = ArrayList<Track>()
