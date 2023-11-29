@@ -17,5 +17,8 @@
     <string name="my_email">mrs_sedova@mail.ru</string>
     <string name="web_url">https://yandex.ru/legal/practicum_offer/</string>
     <string name="web_document">https://practicum.yandex.ru/android-developer/</string>
+    <string name="trackTime">track time</string>
+    <string name="artistName">artist name</string>
+    <string name="trackName">track name</string>
 
 </resources>
