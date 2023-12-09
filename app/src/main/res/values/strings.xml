@@ -20,5 +20,10 @@
     <string name="trackTime">track time</string>
     <string name="artistName">artist name</string>
     <string name="trackName">track name</string>
+    <string name="update">Обновить</string>
+    <string name="no_content">Ничего не нашлось</string>
+    <string name="no_web">Проблемы со связью\n\nЗагрузка не удалась.
+        Проверьте подключение к интернету</string>
+    <string name="search_text">search_text</string>
 
 </resources>
