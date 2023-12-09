@@ -13,7 +13,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 
 
- class TrackView(track: View,private val context: Context) : RecyclerView.ViewHolder(track) {
+ class TrackViewHolder(track: View,private val context: Context) : RecyclerView.ViewHolder(track) {
         private val artistName: TextView = itemView.findViewById(R.id.listArtistName)
         private val trackName: TextView = itemView.findViewById(R.id.listTrackName)
         private val trackTime: TextView = itemView.findViewById(R.id.trackTime)

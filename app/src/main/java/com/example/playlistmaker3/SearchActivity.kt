@@ -117,7 +117,6 @@ class SearchActivity : AppCompatActivity() {
     private fun searchButton() {
         search?.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                clearAdapter()
                 getWebRequest()
             }
             return@setOnEditorActionListener false

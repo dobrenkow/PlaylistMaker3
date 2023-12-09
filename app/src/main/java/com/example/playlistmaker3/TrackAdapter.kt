@@ -5,16 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 class TrackAdapter(private val context: Context) :
-    RecyclerView.Adapter<TrackView>() {
+    RecyclerView.Adapter<TrackViewHolder>() {
     private var listTrack: List<Track> = emptyList()
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackView {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.track_list, parent, false)
-        return TrackView(view, context)
+        return TrackViewHolder(view, context)
     }
 
     override fun getItemCount(): Int = listTrack.size
-    override fun onBindViewHolder(holder: TrackView, position: Int) {
+    override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
         val item = listTrack[position]
         holder.bind(item)
     }
