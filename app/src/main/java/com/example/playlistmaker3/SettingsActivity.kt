@@ -3,13 +3,12 @@ package com.example.playlistmaker3
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.Switch
-import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SwitchCompat
+import androidx.appcompat.widget.Toolbar
 
 
 class SettingsActivity : AppCompatActivity() {
@@ -27,8 +26,7 @@ class SettingsActivity : AppCompatActivity() {
         buttonWriteSupport = findViewById(R.id.support_button)
         buttonUserAgreement = findViewById(R.id.terms_button)
         themeSwitch = findViewById(R.id.dark_theme_switch)
-        val isDarkMode = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
-        themeSwitch.isChecked = isDarkMode
+        checkTheme()
         setUpToolbar()
         onClickListenerButton()
     }
@@ -50,13 +48,19 @@ class SettingsActivity : AppCompatActivity() {
         activity.startActivity(shareIntent)
     }
 
-    private fun toggleTheme(isChecked: Boolean) {
-        if (isChecked) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+    private fun toggleTheme(checked:Boolean) {
+        (applicationContext as App).apply {
+            switchTheme(checked)
+            saveData(checked)
         }
     }
+    private fun checkTheme(){
+        when (AppCompatDelegate.getDefaultNightMode()) {
+            AppCompatDelegate.MODE_NIGHT_YES -> themeSwitch.isChecked = true
+            AppCompatDelegate.MODE_NIGHT_NO -> themeSwitch.isChecked = false
+        }
+    }
+
 
     private fun openEmailApp() {
         val message = getString(R.string.email_message)
@@ -86,8 +90,8 @@ class SettingsActivity : AppCompatActivity() {
         buttonUserAgreement.setOnClickListener {
             parseWeb()
         }
-        themeSwitch.setOnCheckedChangeListener { _, isChecked ->
-            toggleTheme(isChecked)
+        themeSwitch.setOnCheckedChangeListener { switcher, checked ->
+            toggleTheme(checked)
         }
     }
 }
