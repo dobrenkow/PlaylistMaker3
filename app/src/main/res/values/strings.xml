@@ -25,5 +25,7 @@
     <string name="no_web">Проблемы со связью\n\nЗагрузка не удалась.
         Проверьте подключение к интернету</string>
     <string name="search_text">search_text</string>
+    <string name="hint">Вы искали</string>
+    <string name="history_clear">Очистить историю</string>
 
 </resources>
