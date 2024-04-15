@@ -1,8 +1,8 @@
 package com.example.playlistmaker3
+
 import SharedPreferenceConverter
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -24,7 +24,7 @@ class TrackAdapter(private val context: Context, private val pref: SharedPrefere
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
         val item = listTrack[position]
         holder.bind(item)
-        holder.itemView.setOnClickListener {write(item)}
+        holder.itemView.setOnClickListener { write(item) }
     }
 
     fun updateData(newListTrack: List<Track>) {
@@ -36,10 +36,10 @@ class TrackAdapter(private val context: Context, private val pref: SharedPrefere
         listTrack = emptyList()
         notifyDataSetChanged()
     }
+
     private fun write(track: Track) {
         pref.edit()
-            .putString(newTrack,sharedPreferenceConverter.createJsonFromTrack(track))
+            .putString(newTrack, sharedPreferenceConverter.createJsonFromTrack(track))
             .apply()
-        Log.d("write",track.toString())
     }
 }

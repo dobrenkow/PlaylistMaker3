@@ -106,10 +106,10 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.isNullOrEmpty()) {
-                    binding?.clearButton?.visibility = View.INVISIBLE
+                    binding?.clearButton?.visibility = View.GONE
                 } else {
                     binding?.clearButton?.visibility = View.VISIBLE
-                    showButtonClear(false)
+                    showButtonClear(show = false)
                 }
             }
 
@@ -117,13 +117,19 @@ class SearchActivity : AppCompatActivity() {
         }
         binding?.search?.doOnTextChanged { text, _, _, _ ->
             myTextWatcher.onTextChanged(text, 0, 0, 0)
+
         }
+
         binding?.clearButton?.setOnClickListener {
             binding?.search?.text?.clear()
             hideKeyboard()
             hidePicture()
-            showButtonClear(true)
-            showHistoryRequest()
+            if (listTrack.isEmpty()) {
+                showButtonClear(false)
+            } else {
+                showButtonClear(true)
+                showHistoryRequest()
+            }
         }
     }
 
@@ -134,27 +140,27 @@ class SearchActivity : AppCompatActivity() {
 
     private fun hidePicture() {
         binding?.apply {
-            ivMessage?.visibility = View.INVISIBLE
-            tvMessage?.visibility = View.INVISIBLE
+            ivMessage.visibility = View.INVISIBLE
+            tvMessage.visibility = View.INVISIBLE
         }
     }
 
     private fun showButtonClear(show: Boolean) {
         if (show) {
             binding?.apply {
-                btnClearHistory?.visibility = View.VISIBLE
-                tvHint?.visibility = View.VISIBLE
-                trackRecyclerView?.visibility = View.VISIBLE
-                trackRecyclerView?.layoutManager = LinearLayoutManager(this@SearchActivity)
-                trackRecyclerView?.adapter = trackAdapter
+                btnClearHistory.visibility = View.VISIBLE
+                tvHint.visibility = View.VISIBLE
+                trackRecyclerView.visibility = View.VISIBLE
+                trackRecyclerView.layoutManager = LinearLayoutManager(this@SearchActivity)
+                trackRecyclerView.adapter = trackAdapter
             }
         } else {
             binding?.apply {
-                btnClearHistory?.visibility = View.INVISIBLE
-                tvHint?.visibility = View.GONE
-                trackRecyclerView?.visibility = View.INVISIBLE
-                trackRecyclerView?.layoutManager = LinearLayoutManager(this@SearchActivity)
-                trackRecyclerView?.adapter = trackAdapter
+                btnClearHistory.visibility = View.INVISIBLE
+                tvHint.visibility = View.GONE
+                trackRecyclerView.visibility = View.INVISIBLE
+                trackRecyclerView.layoutManager = LinearLayoutManager(this@SearchActivity)
+                trackRecyclerView.adapter = trackAdapter
             }
             trackAdapter.clearListAdapter()
         }
@@ -162,7 +168,7 @@ class SearchActivity : AppCompatActivity() {
 
 
     private fun clearAdapter() {
-        val clearAdapter = TrackAdapter(this,prefData)
+        val clearAdapter = TrackAdapter(this, prefData)
         clearAdapter.clearListAdapter()
         binding?.trackRecyclerView?.adapter = clearAdapter
     }
@@ -174,6 +180,10 @@ class SearchActivity : AppCompatActivity() {
     private fun searchButton() {
         binding?.search?.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
+                showButtonClear(true)
+                binding?.btnClearHistory?.visibility = View.INVISIBLE
+                binding?.tvHint?.visibility = View.GONE
+                clearAdapter()
                 getWebRequest()
             }
             return@setOnEditorActionListener false
@@ -203,10 +213,11 @@ class SearchActivity : AppCompatActivity() {
 
         if (response.isSuccessful && trackList.isNotEmpty()) {
             binding?.apply {
-                trackRecyclerView?.visibility = View.VISIBLE
-                ivMessage?.visibility = View.INVISIBLE
-                btnMessage?.visibility = View.INVISIBLE
-                tvMessage?.text = ""
+                trackRecyclerView.visibility = View.VISIBLE
+                ivMessage.visibility = View.INVISIBLE
+                btnMessage.visibility = View.INVISIBLE
+                tvMessage.text = ""
+                binding?.search?.visibility = View.VISIBLE
             }
 
             val trackAdapter =
@@ -217,10 +228,10 @@ class SearchActivity : AppCompatActivity() {
 
         } else {
             binding?.apply {
-                trackRecyclerView?.visibility = View.INVISIBLE
-                ivMessage?.visibility = View.VISIBLE
-                tvMessage?.visibility = View.VISIBLE
-                btnMessage?.visibility = View.INVISIBLE
+                trackRecyclerView.visibility = View.INVISIBLE
+                ivMessage.visibility = View.VISIBLE
+                tvMessage.visibility = View.VISIBLE
+                btnMessage.visibility = View.INVISIBLE
             }
 
             if (response.isSuccessful) {
@@ -241,12 +252,12 @@ class SearchActivity : AppCompatActivity() {
 
     private fun handleFailure() {
         binding?.apply {
-            trackRecyclerView?.visibility = View.INVISIBLE
-            ivMessage?.visibility = View.VISIBLE
-            tvMessage?.visibility = View.VISIBLE
-            btnMessage?.visibility = View.VISIBLE
-            tvMessage?.text = getString(R.string.no_web)
-            ivMessage?.setImageResource(
+            trackRecyclerView.visibility = View.INVISIBLE
+            ivMessage.visibility = View.VISIBLE
+            tvMessage.visibility = View.VISIBLE
+            btnMessage.visibility = View.VISIBLE
+            tvMessage.text = getString(R.string.no_web)
+            ivMessage.setImageResource(
                 if (isNightModeEnabled()) R.drawable.no_web_dark
                 else R.drawable.no_web
             )
@@ -259,42 +270,42 @@ class SearchActivity : AppCompatActivity() {
     }
 
 
-private fun clearSharedPreference() {
-    binding?.btnClearHistory?.setOnClickListener {
-        prefData.edit().clear().apply()
-        trackAdapter.clearListAdapter()
-        listTrack.clear()
-        showButtonClear(false)
-    }
-}
-
-private fun showHistoryRequest() {
-    trackAdapter.update(listTrack)
-}
-
-private fun getDataForTrack() {
-    val sharedPreferenceConverter = SharedPreferenceConverter
-    fun addTrack(track: String) {
-        val createTrack = sharedPreferenceConverter.createTrackFromJson(track)
-        if (listTrack.contains(createTrack)) {
-            listTrack.remove(createTrack)
+    private fun clearSharedPreference() {
+        binding?.btnClearHistory?.setOnClickListener {
+            prefData.edit().clear().apply()
+            trackAdapter.clearListAdapter()
+            listTrack.clear()
+            showButtonClear(false)
         }
-        listTrack.add(0, createTrack)
-        trackAdapter.notifyItemInserted(0)
     }
-    listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
-        if (key == NEW_TRACK) {
-            val track = sharedPreferences?.getString(NEW_TRACK, null)
-            if (listTrack.size < 10) {
-                if (track != null) {
-                    addTrack(track)
+
+    private fun showHistoryRequest() {
+        trackAdapter.update(listTrack)
+    }
+
+    private fun getDataForTrack() {
+        val sharedPreferenceConverter = SharedPreferenceConverter
+        fun addTrack(track: String) {
+            val createTrack = sharedPreferenceConverter.createTrackFromJson(track)
+            if (listTrack.contains(createTrack)) {
+                listTrack.remove(createTrack)
+            }
+            listTrack.add(0, createTrack)
+            trackAdapter.notifyItemInserted(0)
+        }
+        listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+            if (key == NEW_TRACK) {
+                val track = sharedPreferences?.getString(NEW_TRACK, null)
+                if (listTrack.size < 10) {
+                    if (track != null) {
+                        addTrack(track)
+                    }
+                } else {
+                    listTrack.removeLast()
+                    addTrack(track!!)
                 }
-            } else {
-                listTrack.removeLast()
-                addTrack(track!!)
             }
         }
     }
-}
 }
 
