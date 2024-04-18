@@ -124,6 +124,9 @@ class SearchActivity : AppCompatActivity() {
             binding?.search?.text?.clear()
             hideKeyboard()
             hidePicture()
+            binding?.apply {
+                btnMessage.visibility = View.INVISIBLE
+            }
             if (listTrack.isEmpty()) {
                 showButtonClear(false)
             } else {
@@ -142,6 +145,7 @@ class SearchActivity : AppCompatActivity() {
         binding?.apply {
             ivMessage.visibility = View.INVISIBLE
             tvMessage.visibility = View.INVISIBLE
+            btnMessage.visibility = View.INVISIBLE
         }
     }
 

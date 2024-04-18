@@ -150,8 +150,9 @@
                 android:lineHeight="16dp"
                 android:padding="6dp"
                 android:text="@string/update"
+                app:backgroundTint="@color/black"
                 android:textAllCaps="false"
-                android:textSize="14sp"
+                android:autoSizeTextType="uniform"
                 android:visibility="invisible" />
         </LinearLayout>
 
