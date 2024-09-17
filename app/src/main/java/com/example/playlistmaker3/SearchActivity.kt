@@ -14,9 +14,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.playlistmaker3.databinding.ActivitySearchBinding
+import retrofit2.Response
 import retrofit2.Call
 import retrofit2.Callback
-import retrofit2.Response
+
 
 private const val NEW_TRACK = "new_track"
 private const val MAIN_KEY = "main_key"
@@ -31,6 +32,7 @@ class SearchActivity : AppCompatActivity() {
     private var listTrack = mutableListOf<Track>()
     private lateinit var prefData: SharedPreferences
     private val trackAdapter = TrackHistoryAdapter(this@SearchActivity)
+    private val searchRunnable = Runnable { getWebRequest() }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -110,6 +112,7 @@ class SearchActivity : AppCompatActivity() {
                 } else {
                     binding?.clearButton?.visibility = View.VISIBLE
                     showButtonClear(show = false)
+                    DebounceWorkPlace.searchDebounce(searchRunnable)
                 }
             }
 
@@ -196,19 +199,24 @@ class SearchActivity : AppCompatActivity() {
 
     private fun getWebRequest() {
         val query = binding?.search?.text.toString().trim()
-        val apiService = TrackApiService.create
-        apiService.search(query).enqueue(object : Callback<ResponseTrack> {
-            override fun onResponse(
-                call: Call<ResponseTrack>,
-                response: Response<ResponseTrack>,
-            ) {
-                handleResponse(response)
-            }
+        binding?.progressBar?.visibility = View.VISIBLE
+        if(query.isNotEmpty()) {
 
-            override fun onFailure(call: Call<ResponseTrack>, t: Throwable) {
-                handleFailure()
-            }
-        })
+            val apiService = TrackApiService.create
+            apiService.search(query).enqueue(object : Callback<ResponseTrack> {
+                override fun onResponse(
+                    call: Call<ResponseTrack>,
+                    response: Response<ResponseTrack>
+                ) {
+                    handleResponse(response)
+                    binding?.progressBar?.visibility = View.GONE
+                }
+                override fun onFailure(call: Call<ResponseTrack>, t: Throwable) {
+                    handleFailure()
+                    binding?.progressBar?.visibility = View.GONE
+                }
+            })
+        }
     }
 
 
