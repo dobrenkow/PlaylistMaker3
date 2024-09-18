@@ -14,9 +14,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.playlistmaker3.databinding.ActivitySearchBinding
-import retrofit2.Response
 import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.Response
 
 
 private const val NEW_TRACK = "new_track"
@@ -199,23 +199,27 @@ class SearchActivity : AppCompatActivity() {
 
     private fun getWebRequest() {
         val query = binding?.search?.text.toString().trim()
-        binding?.progressBar?.visibility = View.VISIBLE
-        if(query.isNotEmpty()) {
-
+        if (query.isNotEmpty()) {
+            binding?.progressBar?.visibility = View.VISIBLE
+            hidePicture()
             val apiService = TrackApiService.create
             apiService.search(query).enqueue(object : Callback<ResponseTrack> {
                 override fun onResponse(
                     call: Call<ResponseTrack>,
-                    response: Response<ResponseTrack>
+                    response: Response<ResponseTrack>,
                 ) {
-                    handleResponse(response)
                     binding?.progressBar?.visibility = View.GONE
+                    handleResponse(response)
                 }
+
                 override fun onFailure(call: Call<ResponseTrack>, t: Throwable) {
                     handleFailure()
                     binding?.progressBar?.visibility = View.GONE
                 }
             })
+        }else{
+            binding?.progressBar?.visibility = View.INVISIBLE
+            hidePicture()
         }
     }
 
@@ -246,7 +250,8 @@ class SearchActivity : AppCompatActivity() {
                 btnMessage.visibility = View.INVISIBLE
             }
 
-            if (response.isSuccessful) {
+            if (response.isSuccessful && trackList.isEmpty() ) {
+
                 binding?.tvMessage?.text = getString(R.string.no_content)
                 binding?.ivMessage?.setImageResource(
                     if (isNightModeEnabled()) R.drawable.no_content_dark
