@@ -18,6 +18,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 private const val NEW_TRACK = "new_track"
 private const val MAIN_KEY = "main_key"
 private const val PREF = "pref_data"
@@ -31,6 +32,7 @@ class SearchActivity : AppCompatActivity() {
     private var listTrack = mutableListOf<Track>()
     private lateinit var prefData: SharedPreferences
     private val trackAdapter = TrackHistoryAdapter(this@SearchActivity)
+    private val searchRunnable = Runnable { getWebRequest() }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -110,6 +112,7 @@ class SearchActivity : AppCompatActivity() {
                 } else {
                     binding?.clearButton?.visibility = View.VISIBLE
                     showButtonClear(show = false)
+                    DebounceWorkPlace.searchDebounce(searchRunnable)
                 }
             }
 
@@ -196,19 +199,28 @@ class SearchActivity : AppCompatActivity() {
 
     private fun getWebRequest() {
         val query = binding?.search?.text.toString().trim()
-        val apiService = TrackApiService.create
-        apiService.search(query).enqueue(object : Callback<ResponseTrack> {
-            override fun onResponse(
-                call: Call<ResponseTrack>,
-                response: Response<ResponseTrack>,
-            ) {
-                handleResponse(response)
-            }
+        if (query.isNotEmpty()) {
+            binding?.progressBar?.visibility = View.VISIBLE
+            hidePicture()
+            val apiService = TrackApiService.create
+            apiService.search(query).enqueue(object : Callback<ResponseTrack> {
+                override fun onResponse(
+                    call: Call<ResponseTrack>,
+                    response: Response<ResponseTrack>,
+                ) {
+                    binding?.progressBar?.visibility = View.GONE
+                    handleResponse(response)
+                }
 
-            override fun onFailure(call: Call<ResponseTrack>, t: Throwable) {
-                handleFailure()
-            }
-        })
+                override fun onFailure(call: Call<ResponseTrack>, t: Throwable) {
+                    handleFailure()
+                    binding?.progressBar?.visibility = View.GONE
+                }
+            })
+        }else{
+            binding?.progressBar?.visibility = View.INVISIBLE
+            hidePicture()
+        }
     }
 
 
@@ -238,7 +250,8 @@ class SearchActivity : AppCompatActivity() {
                 btnMessage.visibility = View.INVISIBLE
             }
 
-            if (response.isSuccessful) {
+            if (response.isSuccessful && trackList.isEmpty() ) {
+
                 binding?.tvMessage?.text = getString(R.string.no_content)
                 binding?.ivMessage?.setImageResource(
                     if (isNightModeEnabled()) R.drawable.no_content_dark
